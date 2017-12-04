@@ -59,7 +59,7 @@ class Concentration
         var shuffled = [Card]()
 
         for _ in cards.indices {
-            let randomIndex = Int(arc4random_uniform(UInt32(cards.count)))
+            let randomIndex = cards.count.arc4random
             shuffled.append(cards[randomIndex])
             cards.remove(at: randomIndex)
         }
