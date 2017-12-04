@@ -35,6 +35,7 @@ class Concentration
     }
 
     init(numberOfPairsOfCards: Int) {
+        Card.resetIdentifierFactory()
         for _ in 1...numberOfPairsOfCards {
             let card = Card()
             cards += [card, card]

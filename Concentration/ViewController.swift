@@ -22,6 +22,12 @@ class ViewController: UIViewController
 
     @IBOutlet var cardButtons: [UIButton]!
 
+    @IBAction func touchNewGame() {
+        flipCount = 0
+        game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        updateViewFromModel()
+    }
+
     @IBAction func touchCard(_ sender: UIButton) {
         flipCount += 1
         if let cardNumber = cardButtons.index(of: sender) {
