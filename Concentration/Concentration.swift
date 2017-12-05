@@ -14,6 +14,8 @@ struct Concentration
 
     private(set) var flipCount = 0
 
+    private(set) var score = 0
+
     private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
             return cards.indices.filter { cards[$0].isFaceUp }.oneAndOnly
@@ -25,19 +27,33 @@ struct Concentration
         }
     }
 
+    private mutating func markPairAsSeen(forCardIndex index: Int) {
+        let pairIndices = cards.indices.filter { cards[$0] == cards[index] }
+        pairIndices.forEach { cards[$0].seenAtLeastOnce = true }
+    }
+
     mutating func chooseCard(at index: Int) {
         assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index not in the cards")
         if !cards[index].isMatched {
             flipCount += 1
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 if cards[matchIndex] == cards[index] {
-                    cards[matchIndex].isMatched = true
-                    cards[index].isMatched = true
+                    [matchIndex, index].forEach { cards[$0].isMatched = true; score += 1}
+                } else {
+                    [matchIndex, index].forEach { penalizeMismatch(forCardIndex: $0) }
                 }
                 cards[index].isFaceUp = true
             } else {
                 indexOfOneAndOnlyFaceUpCard = index
             }
+        }
+    }
+
+    mutating func penalizeMismatch(forCardIndex index: Int) {
+        if cards[index].seenAtLeastOnce {
+            score -= 1
+        } else {
+            markPairAsSeen(forCardIndex: index)
         }
     }
 

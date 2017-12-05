@@ -205,17 +205,17 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tSf-2O-5hR">
-                                <rect key="frame" x="16" y="742" width="343" height="51"/>
+                                <rect key="frame" x="16" y="757" width="343" height="36"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flips: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyS-WS-IVH">
-                                        <rect key="frame" x="0.0" y="0.0" width="167.66666666666666" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8k8-7S-4Tu">
+                                        <rect key="frame" x="0.0" y="0.0" width="109" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PyS-yi-4Qz">
-                                        <rect key="frame" x="175.66666666666663" y="0.0" width="167.33333333333337" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <rect key="frame" x="117" y="0.0" width="109" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="New Game">
                                             <color key="titleColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -223,6 +223,12 @@
                                             <action selector="touchNewGame" destination="BYZ-38-t0r" eventType="touchUpInside" id="hK7-fQ-lSi"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flips: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyS-WS-IVH">
+                                        <rect key="frame" x="234" y="0.0" width="109" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -239,6 +245,7 @@
                     </view>
                     <connections>
                         <outlet property="flipCountLabel" destination="gyS-WS-IVH" id="T6H-ZJ-2iW"/>
+                        <outlet property="scoreLabel" destination="8k8-7S-4Tu" id="NFE-L4-oN1"/>
                         <outletCollection property="cardButtons" destination="sSv-1w-PKP" collectionClass="NSMutableArray" id="WvV-y9-w7t"/>
                         <outletCollection property="cardButtons" destination="kGM-Jf-x6Z" collectionClass="NSMutableArray" id="pGq-Qb-I7i"/>
                         <outletCollection property="cardButtons" destination="ylo-18-nFz" collectionClass="NSMutableArray" id="EZX-X2-0zc"/>
