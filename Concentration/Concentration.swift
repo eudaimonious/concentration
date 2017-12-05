@@ -11,10 +11,27 @@ import Foundation
 struct Concentration
 {
     private(set) var cards = [Card]()
-
     private(set) var flipCount = 0
-
     private(set) var score = 0
+
+    init(numberOfPairsOfCards: Int) {
+        assert(numberOfPairsOfCards > 0, "Concentration.init(\(numberOfPairsOfCards): you must have at least one pair of cards")
+        Card.resetIdentifierFactory()
+        for _ in 1...numberOfPairsOfCards {
+            let card = Card()
+            cards += [card, card]
+        }
+
+        var shuffled = [Card]()
+
+        for _ in cards.indices {
+            let randomIndex = cards.count.arc4random
+            shuffled.append(cards[randomIndex])
+            cards.remove(at: randomIndex)
+        }
+
+        cards = shuffled
+    }
 
     private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
@@ -57,24 +74,6 @@ struct Concentration
         }
     }
 
-    init(numberOfPairsOfCards: Int) {
-        assert(numberOfPairsOfCards > 0, "Concentration.init(\(numberOfPairsOfCards): you must have at least one pair of cards")
-        Card.resetIdentifierFactory()
-        for _ in 1...numberOfPairsOfCards {
-            let card = Card()
-            cards += [card, card]
-        }
-
-        var shuffled = [Card]()
-
-        for _ in cards.indices {
-            let randomIndex = cards.count.arc4random
-            shuffled.append(cards[randomIndex])
-            cards.remove(at: randomIndex)
-        }
-
-        cards = shuffled
-    }
 }
 
 extension Collection {

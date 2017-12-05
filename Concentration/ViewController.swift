@@ -10,37 +10,35 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
 
-    private var emojiChoices: [String] = []
+    private let emojiThemes = [
+        ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨"], // animals
+        ["🎅", "🤶", "🦌", "☃️", "🎄", "🎁", "🧦", "🔔", "🕯️"], // christmas
+        ["🤮", "🙄", "🤯", "🤩", "🤪", "🤨", "🤠", "🤬", "🤤"], // faces
+        ["🍕", "🍔", "🍣", "🌮", "🍿", "🍗", "🥐", "🥑", "🌽"], // food
+        ["🦇", "😱", "🙀", "😈", "🎃", "👻", "🍭", "🍬", "🍎"], // halloween
+        ["⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓"], // sports
+    ]
 
-    var numberOfPairsOfCards: Int {
-        return (cardButtons.count + 1) / 2
-    }
-
-    let labelStyling: [NSAttributedStringKey:Any] = [
+    private let labelStyling: [NSAttributedStringKey:Any] = [
         .strokeWidth: 5.0,
         .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
     ]
 
-    private func updateLabels() {
-        flipCountLabel.attributedText = NSAttributedString(string: "Flips: \(game.flipCount)", attributes: labelStyling)
-        scoreLabel.attributedText = NSAttributedString(string: "Score: \(game.score)", attributes: labelStyling)
-    }
-
-    private func updateTheme() {
-        emojiChoices = emojiThemes[emojiThemes.count.arc4random]
-    }
-
-    @IBOutlet private weak var flipCountLabel: UILabel!
-
-    @IBOutlet weak var scoreLabel: UILabel!
-
-    @IBOutlet private var cardButtons: [UIButton]!
+    private var emoji = [Card:String]()
+    private var emojiChoices: [String] = []
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
 
     override func viewDidLoad() {
         updateLabels()
         updateTheme()
+    }
+
+    var numberOfPairsOfCards: Int {
+        return (cardButtons.count + 1) / 2
     }
 
     @IBAction private func touchNewGame() {
@@ -59,6 +57,23 @@ class ViewController: UIViewController
         }
     }
 
+    private func emoji(for card: Card) -> String {
+        if emoji[card] == nil, emojiChoices.count > 0 {
+            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+        }
+
+        return emoji[card] ?? "?"
+    }
+
+    private func updateLabels() {
+        flipCountLabel.attributedText = NSAttributedString(string: "Flips: \(game.flipCount)", attributes: labelStyling)
+        scoreLabel.attributedText = NSAttributedString(string: "Score: \(game.score)", attributes: labelStyling)
+    }
+
+    private func updateTheme() {
+        emojiChoices = emojiThemes[emojiThemes.count.arc4random]
+    }
+
     private func updateViewFromModel() {
         updateLabels()
         for index in cardButtons.indices {
@@ -72,25 +87,6 @@ class ViewController: UIViewController
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
         }
-    }
-
-    let emojiThemes = [
-        ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨"], // animals
-        ["🎅", "🤶", "🦌", "☃️", "🎄", "🎁", "🧦", "🔔", "🕯️"], // christmas
-        ["🤮", "🙄", "🤯", "🤩", "🤪", "🤨", "🤠", "🤬", "🤤"], // faces
-        ["🍕", "🍔", "🍣", "🌮", "🍿", "🍗", "🥐", "🥑", "🌽"], // food
-        ["🦇", "😱", "🙀", "😈", "🎃", "👻", "🍭", "🍬", "🍎"], // halloween
-        ["⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓"], // sports
-    ]
-
-    private var emoji = [Card:String]()
-
-    private func emoji(for card: Card) -> String {
-        if emoji[card] == nil, emojiChoices.count > 0 {
-            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
-        }
-
-        return emoji[card] ?? "?"
     }
 }
 
