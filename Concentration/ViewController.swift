@@ -12,6 +12,8 @@ class ViewController: UIViewController
 {
     private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
 
+    private var emojiChoices: [String] = []
+
     var numberOfPairsOfCards: Int {
         return (cardButtons.count + 1) / 2
     }
@@ -26,6 +28,10 @@ class ViewController: UIViewController
         scoreLabel.attributedText = NSAttributedString(string: "Score: \(game.score)", attributes: labelStyling)
     }
 
+    private func updateTheme() {
+        emojiChoices = emojiThemes[emojiThemes.count.arc4random]
+    }
+
     @IBOutlet private weak var flipCountLabel: UILabel!
 
     @IBOutlet weak var scoreLabel: UILabel!
@@ -34,10 +40,13 @@ class ViewController: UIViewController
 
     override func viewDidLoad() {
         updateLabels()
+        updateTheme()
     }
 
     @IBAction private func touchNewGame() {
+        emoji = [Card:String]()
         game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        updateTheme()
         updateViewFromModel()
     }
 
@@ -65,7 +74,14 @@ class ViewController: UIViewController
         }
     }
 
-    private var emojiChoices = ["🦇", "😱", "🙀", "😈", "🎃", "👻", "🍭", "🍬", "🍎"]
+    let emojiThemes = [
+        ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨"], // animals
+        ["🎅", "🤶", "🦌", "☃️", "🎄", "🎁", "🧦", "🔔", "🕯️"], // christmas
+        ["🤮", "🙄", "🤯", "🤩", "🤪", "🤨", "🤠", "🤬", "🤤"], // faces
+        ["🍕", "🍔", "🍣", "🌮", "🍿", "🍗", "🥐", "🥑", "🌽"], // food
+        ["🦇", "😱", "🙀", "😈", "🎃", "👻", "🍭", "🍬", "🍎"], // halloween
+        ["⚽️", "🏀", "🏈", "⚾️", "🎾", "🏐", "🏉", "🎱", "🏓"], // sports
+    ]
 
     private var emoji = [Card:String]()
 
